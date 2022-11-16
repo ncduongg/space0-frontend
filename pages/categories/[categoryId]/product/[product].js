@@ -4,9 +4,9 @@ import React, { memo } from 'react';
 const ProductDetail = ({data}) => {
     const router = useRouter();
 
-    return (<div>Nguyeenx Cong DUong + { JSON.stringify(router.query) }</div>)
+    return (<div>Nguyeenx Cong DUong + { data }</div>)
 }
-export async function getStaticProps() {
+/* export async function getStaticProps() {
     const data = [
         {
             title: "duong",
@@ -18,7 +18,8 @@ export async function getStaticProps() {
         }
     ]
     return {
-        props:{data}
+        props:{data},
+        fallback:false
     }
-}
+} */
 export default ProductDetail;
