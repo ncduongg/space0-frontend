@@ -1,4 +1,6 @@
-import React from 'react';
+import { useRouter } from 'next/router';
+import Notiflix from 'notiflix';
+import React, { useState } from 'react';
 import {
   FaDribbbleSquare,
   FaFacebookSquare,
@@ -8,6 +10,12 @@ import {
 } from 'react-icons/fa';
 
 const Footer = () => {
+  // useState(() =>{
+  //   Notiflix.Loading.hourglass("Loading...", {
+  //     backgroundColor: "rgba(0,0,0,1)",
+  //   });
+  //   return Notiflix.Loading.remove(2500);
+  // },[])
   return (
     <div className='max-w-[1340px] mx-auto py-16 px-4 grid lg:grid-cols-3 gap-8 text-gray-300'>
       <div>
