@@ -10,7 +10,7 @@ const HotKeyWordList = () => {
             Từ khóa nổi bật
             </h2>
           </div>
-          <div className="flex flex-row justify-between flex-wrap">
+          <div className="flex justify-around flex-wrap gap-16">
             <HotKeyWord />
             <HotKeyWord />
             <HotKeyWord />
