@@ -1,7 +1,9 @@
 import { useRouter } from "next/router";
 import React from "react";
+import { IconContext } from "react-icons";
 import Footer from "../../components/Footer";
 import Navbar from "../../components/Navbar";
+import MenuProfile from "./components/MenuProfile";
 
 export default function Profile() {
   const route = useRouter();
@@ -10,7 +12,11 @@ export default function Profile() {
   return (
     <div className="text-white">
       <Navbar />
-      Nguyeenx Cong DUong neeee + {JSON.stringify(route.query)}
+      <div className="w-full">
+        <div className="max-w-[1340px] flex mx-auto">
+        <MenuProfile />
+        </div>
+      </div>
       <Footer />
     </div>
   );
