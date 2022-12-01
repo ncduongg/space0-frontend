@@ -26,7 +26,7 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", toggleVisibility);
   }, []);
   const onHandlerSubmitSreach = (e) => {
-    if (e.key === "Enter") {
+    if (e.key.toString() === "Enter") {
       if (router.pathname === "/" || !router.pathname.startsWith('/sreach')) {
         Notiflix.Loading.standard("Loading...", {
           backgroundColor: "rgba(0,0,0,0.8)",

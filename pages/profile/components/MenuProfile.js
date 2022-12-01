@@ -1,36 +1,92 @@
+import classnames from "classnames";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import { IconContext } from "react-icons";
-import { AiFillIdcard, AiFillSecurityScan, AiOutlineShoppingCart, AiOutlineUser } from "react-icons/ai";
+import {
+  AiFillIdcard,
+  AiFillSecurityScan,
+  AiOutlineShoppingCart,
+  AiOutlineUser,
+} from "react-icons/ai";
 
-const MenuProfile = () => {
+function MenuProfile({ menu,profileid }) {
+  const [menuProfile, setMenuProfile] = useState([
+    {
+      id: "taikhoan",
+      title: "Tài Khoản",
+      icon: AiOutlineUser,
+      status: false,
+    },
+    {
+      id: "lichsudonhang",
+      title: "Lịch sử đơn hàng",
+      icon: AiOutlineShoppingCart,
+      status: false,
+    },
+    {
+      id: "lichsugiaodich",
+      title: "Lịch sử giao dịch",
+      icon: AiFillSecurityScan,
+      status: false,
+    },
+    {
+      id: "baomat",
+      title: "Bảo mật",
+      icon: AiFillIdcard,
+      status: false,
+    },
+    {
+      id: "binhluan",
+      title: "Bình lụân của tôi",
+      icon: AiFillIdcard,
+      status: false,
+    },
+    {
+      id: "sanpham",
+      title: "Sản phẩm của tôi",
+      icon: AiFillIdcard,
+      status: false,
+    },
+  ]);
+  useEffect(() => {
+    const q = menuProfile.map((i) => {
+      if (i.id === menu) {
+        return {
+          ...i,
+          status: true,
+        };
+      } else {
+        return {
+          ...i,
+          status: false,
+        };
+      }
+    });
+    setMenuProfile(q);
+  }, [menu]);
   return (
     <>
-      <div>
-        <div className="flex t gap-2 border-l-4 border-[#00df9a] py-5 pl-4 pr-32 bg-slate-800 cursor-pointer">
-          <IconContext.Provider value={{ color: "white", size: "30px" }}>
-            <AiOutlineUser />
-          </IconContext.Provider>
-          <p className="my-auto">Tài Khoản</p>
-        </div>
-        <div className="flex t gap-2 py-5 pl-4 pr-32 bg-slate-800 cursor-pointer">
-          <IconContext.Provider value={{ color: "white", size: "30px" }}>
-            <AiOutlineShoppingCart />
-          </IconContext.Provider>
-          <p className="my-auto">Lịch sử đơn hàng</p>
-        </div>
-        <div className="flex t gap-2 py-5 pl-4 pr-32 bg-slate-800 cursor-pointer">
-          <IconContext.Provider value={{ color: "white", size: "30px" }}>
-            <AiFillSecurityScan />
-          </IconContext.Provider>
-          <p className="my-auto">Lịch sử giao dịch</p>
-        </div>
-          <div className="flex t gap-2 py-5 pl-4 pr-32 bg-slate-800 cursor-pointer">
-          <IconContext.Provider value={{ color: "white", size: "30px" }}>
-            <AiFillIdcard />
-          </IconContext.Provider>
-          <p className="my-auto">Mật khẩu và bảo mật</p>
-        </div>
+      <div className="flex-[1_5_100%] bg-slate-800 rounded-tl-3xl">
+        {menuProfile.map((x) => {
+          return (
+            <Link key={x.id} href={`/profile/${profileid}?menu=${x.id}`}>
+              <div
+                className={classnames(
+                  "flex gap-2 py-5 pl-4 cursor-pointer",
+                  x.status && x.id === 'taikhoan' ? "rounded-tl-3xl border-[#00df9a] border-l-4 border-t-[-14px]" : x.status ? "border-[#00df9a] border-l-4"  : ''
+                )}
+              >
+                <IconContext.Provider value={{ color: "white", size: "30px" }}>
+                  {x.icon()}
+                </IconContext.Provider>
+                <p className="my-auto">{x.title}</p>
+              </div>
+            </Link>
+          );
+        })}
       </div>
     </>
   );
-};
+}
 export default MenuProfile;
