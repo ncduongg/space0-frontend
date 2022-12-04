@@ -3,6 +3,7 @@ import React from "react";
 import Footer from "../../components/Footer";
 import Navbar from "../../components/Navbar";
 import Comment from "./components/Comment";
+import ProductAuction from "./components/ProductAuction";
 import ProductContent from "./components/ProductContent";
 import ProductDetail from "./components/ProductDetail";
 
@@ -11,6 +12,8 @@ const Product = () => {
     <>
         <Navbar />
         <ProductDetail />
+        <ProductAuction />
+        <ProductAuction />
         <ProductContent />
         <Comment />
         <Comment />

@@ -1,4 +1,6 @@
 import Head from "next/head";
+import { useEffect } from "react";
+import PublicApi from "../apis/PublicApi";
 import Analytics from "../components/Analytics";
 import Footer from "../components/Footer";
 import GoToTheMoon from "../components/GoToTheMoon";
@@ -10,6 +12,12 @@ import Study from "../components/Study";
 import TopSale from "../components/TopSale";
 
 export default function Home() {
+  useEffect(() =>{
+    (async ()=>{
+       const res =  await PublicApi.getCategories()
+       console.log(res);
+    })()
+  },[])
   return (
     <div>
       <Head>

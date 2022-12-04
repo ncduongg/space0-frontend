@@ -6,7 +6,11 @@ import { IconContext } from "react-icons";
 import { AiOutlineCopy } from "react-icons/ai";
 import { BsFillInboxesFill } from "react-icons/bs";
 import Item from "../../../assets/imgItems/laptop.jpg";
+import CountDown from "../../../components/CountDown";
 const ProductDetail = () => {
+  const [countDate, setCountDate] = useState(
+    new Date("Dec 5, 2022 15:37:25").getTime()
+  );
   const [url,setUrl] = useState();
   const route = useRouter();
   const [dataTabs, setDataTabs] = useState([
@@ -75,10 +79,27 @@ const ProductDetail = () => {
             <p className="pl-3">
               Tình trạng: <span className="text-[#00df9a]">Còn hàng</span>
             </p>
+            <p className="pl-3">
+              Còn lại: <CountDown countDownClassName="opacity-90 text-[#00df9a]" countDate={countDate}/>
+            </p>
           </div>
           <p className="font-bold text-[#00df9a] text-[23px]">490.000VNĐ</p>
           <p className="line-through">1.500.000VNĐ</p>
-          <div className="flex justify-items-start">
+          <div className="flex gap-4">
+          <input
+              className="bg-gray-200 border-2  border-gray-200 rounded-3xl py- w-auto py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white"
+              type="text"
+              contentEditable="true"
+              placeholder="Nhập vào số tiền bạn muốn đấu giá"
+            />
+             <button
+                id="daugia"
+                className="bg-[#00df9a] px-4  border-2 border-[#00df9a] rounded-md whitespace-nowrap"
+              >
+                Đấu giá
+              </button>
+          </div>
+          <div className="flex justify-items-start hidden">
             {dataTabs.map((btn) => (
               <button
                 key={btn.id}
@@ -95,7 +116,7 @@ const ProductDetail = () => {
             ))}
           </div>
         </div>
-        <div className=" w-[550px] border-l-2 pl-3 border-[#00df9a]">
+        <div className="w-[550px] border-l-2 pl-3 border-[#00df9a]">
           <p className="font-light">Mã sản phẩm</p>
           <p className="font-bold">DBF</p>
           <p className="text-[20px] font-bold">Giới thiệu bạn bè</p>

@@ -3,7 +3,8 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import Notiflix from "notiflix";
 import { useEffect, useState } from "react";
-import { AiOutlineMenu } from "react-icons/ai";
+import { IconContext } from "react-icons";
+import { AiOutlineMenu, AiOutlineUser } from "react-icons/ai";
 import Util from "../Util/Util";
 export default function Navbar() {
   const [nav, setNav] = useState(false);
@@ -27,15 +28,12 @@ export default function Navbar() {
   }, []);
   const onHandlerSubmitSreach = (e) => {
     if (e.key.toString() === "Enter") {
-      if (router.pathname === "/" || !router.pathname.startsWith('/sreach')) {
+      if (router.pathname === "/" || !router.pathname.startsWith("/sreach")) {
         Notiflix.Loading.standard("Loading...", {
           backgroundColor: "rgba(0,0,0,0.8)",
         });
         setTimeout(() => {
-          router.push(
-            "/sreach/" +
-              Util.convertSreachkey(sreach, "en")
-          );
+          router.push("/sreach/" + Util.convertSreachkey(sreach, "en"));
           Notiflix.Loading.remove();
         }, 1500);
       } else {
@@ -46,10 +44,7 @@ export default function Navbar() {
         setTimeout(() => {
           Notiflix.Block.remove(".product-list");
         }, 1500);
-        router.push(
-          "/sreach/" +
-            Util.convertSreachkey(sreach, "en")
-        );
+        router.push("/sreach/" + Util.convertSreachkey(sreach, "en"));
       }
     }
   };
@@ -85,23 +80,51 @@ export default function Navbar() {
             onKeyDown={onHandlerSubmitSreach}
           />
         </div>
-        <ul className="hidden md:flex">
-          <li className="p-4">
+        <ul className="hidden md:flex ">
+          <li className="p-4 my-auto">
             <Link href="#">Home</Link>
           </li>
-          <li className="p-4">
+          <li className="p-4 my-auto">
             <Link href="#">Shop</Link>
           </li>
-          <li className="p-4">
+          <li className="p-4 my-auto">
             <Link href="#">Blog</Link>
           </li>
-          <li className="p-4">
+          <li className="p-4 my-auto">
             <Link href="#">About</Link>
           </li>
-          <li className="p-4">
+          <li className="p-4 my-auto">
             <Link href="#">Contact</Link>
           </li>
+          <Link
+            href="/auth/login"
+            className="p-2 m-2 whitespace-nowrap rounded-tl-xl border-2 border-[#00df9a] my-auto cursor-pointer"
+          >
+            <li>Đăng Nhập</li>
+          </Link>
+          <Link
+            href="/auth/register"
+            className="p-2 m-2 whitespace-nowrap rounded-br-xl border-2 bg-[#00df9a] my-auto cursor-pointer"
+          >
+            <li>Đăng Ký</li>
+          </Link>
+          <li className="p-4 hidden">
+            <Link href="/auth/login">
+              <div className="" title="Đăng Nhập">
+                <IconContext.Provider
+                  value={{
+                    color: "white",
+                    size: "25px",
+                    className: "border-[#00df9a] cursor-pointer",
+                  }}
+                >
+                  <AiOutlineUser />
+                </IconContext.Provider>
+              </div>
+            </Link>
+          </li>
         </ul>
+
         <div onClick={handleNav} className="cursor-pointer block md:hidden">
           {nav ? <AiOutlineMenu size={20} /> : ""}
         </div>
