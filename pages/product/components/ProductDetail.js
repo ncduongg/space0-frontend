@@ -9,7 +9,7 @@ import Item from "../../../assets/imgItems/laptop.jpg";
 import CountDown from "../../../components/CountDown";
 const ProductDetail = () => {
   const [countDate, setCountDate] = useState(
-    new Date("Dec 5, 2022 15:37:25").getTime()
+    new Date("Dec 25, 2022 15:37:25").getTime()
   );
   const [url,setUrl] = useState();
   const route = useRouter();

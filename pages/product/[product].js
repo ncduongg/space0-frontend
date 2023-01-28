@@ -2,6 +2,7 @@
 import React from "react";
 import Footer from "../../components/Footer";
 import Navbar from "../../components/Navbar";
+import { PublicLayout } from "../../layouts/public";
 import Comment from "./components/Comment";
 import ProductAuction from "./components/ProductAuction";
 import ProductContent from "./components/ProductContent";
@@ -10,7 +11,6 @@ import ProductDetail from "./components/ProductDetail";
 const Product = () => {
   return (
     <>
-        <Navbar />
         <ProductDetail />
         <ProductAuction />
         <ProductAuction />
@@ -18,25 +18,8 @@ const Product = () => {
         <Comment />
         <Comment />
         <Comment />
-        <Footer />
-
     </>
   );
 };
-/* export async function getStaticProps() {
-    const data = [
-        {
-            title: "duong",
-            phone:"0981993333"
-        },
-        {
-            title: "duong1",
-            phone:"09819933331111"
-        }
-    ]
-    return {
-        props:{data},
-        fallback:false
-    }
-} */
+Product.Layout = PublicLayout;
 export default Product;

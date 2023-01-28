@@ -10,14 +10,16 @@ import Navbar from "../components/Navbar";
 import Newsletter from "../components/Newsletter";
 import Study from "../components/Study";
 import TopSale from "../components/TopSale";
+import { PublicLayout } from "../layouts/public";
+import { PublicMainLayout } from "../layouts/publicmain";
 
 export default function Home() {
-  useEffect(() =>{
-    (async ()=>{
-       const res =  await PublicApi.getCategories()
-       console.log(res);
-    })()
-  },[])
+  // useEffect(() =>{
+  //   (async ()=>{
+  //      const res =  await PublicApi.getCategories()
+  //      console.log(res);
+  //   })()
+  // },[])
   return (
     <div>
       <Head>
@@ -27,17 +29,16 @@ export default function Home() {
       </Head>
 
       <main className=''>
-      <Navbar />
-      <Hero />
+      <Hero /> 
       <HotKeyWordList />
       <TopSale />
       <Analytics />
       <Newsletter />
       <Study />
       <Study />
-      <Footer />
       <GoToTheMoon />
       </main>
     </div>
   );
 }
+Home.Layout = PublicMainLayout

@@ -1,6 +1,41 @@
 import Link from "next/link";
+import { Notify } from "notiflix";
+import { useState } from "react";
+import useAuth from "../../../../hooks/useAuth";
 
 const FormLogin = () => {
+  const [loginForm,setLoginForm] = useState({
+    username:'',
+    password:''
+  })
+  const {profile,error,login,logout} = useAuth();
+  const handleChangeForm = (e) => {
+    const id = e.target.id;
+    const value = e.target.value + "";
+    Object.keys(loginForm).forEach((key) => {
+      if (key === id) {
+        loginForm[key] = value;
+        setLoginForm(loginForm);
+        return;
+      }
+    });
+  };
+  async function handleOnSumitLogin (e) {
+    const keyEmpty = Object.keys(loginForm).filter((key) => {
+      if (loginForm[key] === "") {
+        return key;
+      }
+    });
+    if (keyEmpty.length > 0) {
+      Notify.warning("Vui lòng nhập đầy đủ thông tin", {
+        timeout: 2000,
+        clickToClose: true,
+      });
+      return;
+    }
+    await login(loginForm);
+    console.log(profile);
+  }
   return (
     <>
       <div className="xl:ml-20 xl:w-5/12 lg:w-5/12 md:w-8/12 mb-12 md:mb-0">
@@ -65,12 +100,12 @@ const FormLogin = () => {
           <div className="flex items-center my-4 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5">
             <p className="text-center font-semibold mx-4 mb-0">Hoặc</p>
           </div>
-
           <div className="mb-6">
             <input
               type="text"
               className="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
               id="username"
+              onChange={e => handleChangeForm(e)}
               placeholder="Tài khoản / Email / Số điện thoại"
             />
           </div>
@@ -80,6 +115,7 @@ const FormLogin = () => {
               type="password"
               className="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
               id="password"
+              onChange={e => handleChangeForm(e)}
               placeholder="Mật khẩu"
             />
           </div>
@@ -108,6 +144,7 @@ const FormLogin = () => {
           <div className="text-center lg:text-left">
             <button
               type="button"
+              onClick={(e) => handleOnSumitLogin(e)}
               className="inline-block px-7 py-3 bg-[#00df9a] text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
             >
               Đăng nhập

@@ -1,6 +1,61 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
+import Notiflix, { Notify } from "notiflix";
+import { useEffect, useState } from "react";
+import AuthApi from "../../../../apis/AuthApi";
 
 const FormRegister = () => {
+  const [register, setRegister] = useState({
+    taikhoan: "",
+    email: "",
+    phone: "",
+    hovaten: "",
+    ngaysinh: null,
+    matkhau: "",
+    rematkhau: "",
+  });
+  const { push, query, isReady } = useRouter();
+  const handleChangeForm = (e) => {
+    const id = e.target.id;
+    const value = e.target.value + "";
+    Object.keys(register).forEach((key) => {
+      if (key === id) {
+        register[key] = value;
+        setRegister(register);
+        return;
+      }
+    });
+  };
+  const handleSubmitRegister = (e) => {
+    const keyEmpty = Object.keys(register).filter((key) => {
+      if (register[key] === "") {
+        return key;
+      }
+    });
+    if (keyEmpty.length > 0) {
+      Notiflix.Notify.warning("Vui lòng nhập đầy đủ thông tin", {
+        timeout: 2000,
+        clickToClose: true,
+      });
+      return;
+    }
+    AuthApi.register(register)
+      .then((res) => {
+        const data = res.data;
+        if (data.response_code != "000") {
+          Notify.failure(data.message);
+        } else {
+          Notify.success(data.message, {
+            timeout: 2000,
+          });
+          push("/auth/login");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        Notify.failure(error);
+      });
+  };
   return (
     <>
       <div className="xl:ml-20 xl:w-5/12 lg:w-5/12 md:w-8/12 mb-12 md:mb-0">
@@ -71,7 +126,9 @@ const FormRegister = () => {
               type="text"
               className="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
               id="taikhoan"
+              name="taikhoan"
               placeholder="Tài khoản"
+              onChange={(e) => handleChangeForm(e)}
             />
           </div>
 
@@ -80,7 +137,9 @@ const FormRegister = () => {
               type="text"
               className="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
               id="email"
+              name="email"
               placeholder="Email"
+              onChange={(e) => handleChangeForm(e)}
             />
           </div>
 
@@ -89,7 +148,9 @@ const FormRegister = () => {
               type="text"
               className="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
               id="phone"
+              name="phone"
               placeholder="Số điện thoại"
+              onChange={(e) => handleChangeForm(e)}
             />
           </div>
 
@@ -98,7 +159,9 @@ const FormRegister = () => {
               type="text"
               className="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
               id="hovaten"
+              name="hovaten"
               placeholder="Họ Và Tên"
+              onChange={(e) => handleChangeForm(e)}
             />
           </div>
 
@@ -107,6 +170,8 @@ const FormRegister = () => {
               type="date"
               className="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
               id="ngaysinh"
+              name="ngaysinh"
+              onChange={(e) => handleChangeForm(e)}
             />
           </div>
 
@@ -115,7 +180,9 @@ const FormRegister = () => {
               type="password"
               className="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
               id="matkhau"
+              name="matkhau"
               placeholder="Mật khẩu"
+              onChange={(e) => handleChangeForm(e)}
             />
           </div>
 
@@ -124,7 +191,9 @@ const FormRegister = () => {
               type="password"
               className="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
               id="rematkhau"
+              name="rematkhau"
               placeholder="Nhập lại Mật khẩu "
+              onChange={(e) => handleChangeForm(e)}
             />
           </div>
 
@@ -152,12 +221,13 @@ const FormRegister = () => {
           <div className="text-center lg:text-left">
             <button
               type="button"
+              onClick={(e) => handleSubmitRegister(e)}
               className="inline-block px-7 py-3 bg-[#00df9a] text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
             >
               Đăng ký nèo
             </button>
             <p className="text-sm font-semibold mt-2 pt-1 mb-0">
-              Đã có tài khoản? {" "}
+              Đã có tài khoản?{" "}
               <Link
                 href="/auth/login"
                 className="text-red-600 hover:text-red-700 focus:text-red-700 transition duration-200 ease-in-out"

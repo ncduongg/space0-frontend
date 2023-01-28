@@ -4,13 +4,15 @@ import { useRouter } from "next/router";
 import Notiflix from "notiflix";
 import { useEffect, useState } from "react";
 import { IconContext } from "react-icons";
-import { AiOutlineMenu, AiOutlineUser } from "react-icons/ai";
+import { AiOutlineLogout, AiOutlineMenu, AiOutlineUser } from "react-icons/ai";
+import useAuth from "../hooks/useAuth";
 import Util from "../Util/Util";
 export default function Navbar() {
   const [nav, setNav] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [sreach, setSreach] = useState("");
   const router = useRouter();
+  const { profile, firstLOading } = useAuth();
   const handleNav = () => {
     setNav(!nav);
   };
@@ -96,33 +98,54 @@ export default function Navbar() {
           <li className="p-4 my-auto">
             <Link href="#">Contact</Link>
           </li>
-          <Link
-            href="/auth/login"
-            className="p-2 m-2 whitespace-nowrap rounded-tl-xl border-2 border-[#00df9a] my-auto cursor-pointer"
-          >
-            <li>Đăng Nhập</li>
-          </Link>
-          <Link
-            href="/auth/register"
-            className="p-2 m-2 whitespace-nowrap rounded-br-xl border-2 bg-[#00df9a] my-auto cursor-pointer"
-          >
-            <li>Đăng Ký</li>
-          </Link>
-          <li className="p-4 hidden">
-            <Link href="/auth/login">
-              <div className="" title="Đăng Nhập">
-                <IconContext.Provider
-                  value={{
-                    color: "white",
-                    size: "25px",
-                    className: "border-[#00df9a] cursor-pointer",
-                  }}
-                >
-                  <AiOutlineUser />
-                </IconContext.Provider>
-              </div>
-            </Link>
-          </li>
+          {!profile?.data || profile.data.response_code !== "000" ? (
+            <>
+              <Link
+                href="/auth/login"
+                className="p-2 m-2 whitespace-nowrap rounded-tl-xl border-2 border-[#00df9a] my-auto cursor-pointer"
+              >
+                <li>Đăng Nhập</li>
+              </Link>
+              <Link
+                href="/auth/register"
+                className="p-2 m-2 whitespace-nowrap rounded-br-xl border-2 bg-[#00df9a] my-auto cursor-pointer"
+              >
+                <li>Đăng Ký</li>
+              </Link>
+            </>
+          ) : (
+            <>
+              <li className="p-4">
+                <Link href={`/profile/${profile.data.content.username}?menu=taikhoan`}>
+                  <div className="" title="Profile">
+                    <IconContext.Provider
+                      value={{
+                        color: "white",
+                        size: "25px",
+                        className: "border-[#00df9a] cursor-pointer",
+                      }}
+                    >
+                      <AiOutlineUser />
+                    </IconContext.Provider>
+                  </div>
+                </Link>
+                
+              </li>
+              <li className="p-4">
+              <div className="" title="Logout">
+                    <IconContext.Provider
+                      value={{
+                        color: "white",
+                        size: "25px",
+                        className: "border-[#00df9a] cursor-pointer",
+                      }}
+                    >
+                      <AiOutlineLogout />
+                    </IconContext.Provider>
+                  </div>
+              </li>
+            </>
+          )}
         </ul>
 
         <div onClick={handleNav} className="cursor-pointer block md:hidden">

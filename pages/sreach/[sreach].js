@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Footer from "../../components/Footer";
 import Navbar from "../../components/Navbar";
+import { PublicLayout } from "../../layouts/public";
 import Util from "../../Util/Util";
 import Filter from "./components/Filter";
 import MenuCategory from "./components/MenuCategory";
@@ -18,12 +19,11 @@ const Sreach = ({data}) => {
     },[query.sreach, router.isReady])
     return (
         <>
-        <Navbar />
         <MenuCategory />
         <Filter keysreach={key}/>
         <ProductList />
-        <Footer />
         </>
     )
 }
+Sreach.Layout = PublicLayout
 export default Sreach

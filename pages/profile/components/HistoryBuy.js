@@ -24,7 +24,7 @@ const HistoryBuy = () => {
               placeholder=""
             />
             <label
-              for="madonhang"
+              htmlFor="madonhang"
               className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] left-2.5 peer-focus:text-[#00df9a] peer-focus:dark:text-[#00df9a] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4"
             >
               Mã đơn hàng
@@ -38,7 +38,7 @@ const HistoryBuy = () => {
               placeholder=""
             />
             <label
-              for="sotientu"
+              htmlFor="sotientu"
               className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] left-2.5 peer-focus:text-[#00df9a] peer-focus:dark:text-[#00df9a] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4"
             >
               Số tiền từ
@@ -52,7 +52,7 @@ const HistoryBuy = () => {
               placeholder=""
             />
             <label
-              for="sotienden"
+              htmlFor="sotienden"
               className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] left-2.5 peer-focus:text-[#00df9a] peer-focus:dark:text-[#00df9a] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4"
             >
               Só tiên đến
@@ -149,7 +149,7 @@ const HistoryBuy = () => {
                           3
                         </td>
                         <td
-                          colspan="2"
+                          colSpan="2"
                           className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap text-center"
                         >
                           Larry the Bird

@@ -1,6 +1,8 @@
+import Image from "next/image";
 import { useRouter } from "next/router";
 import Footer from "../../components/Footer";
 import Navbar from "../../components/Navbar";
+import { PublicLayout } from "../../layouts/public";
 import FormLogin from "./login/components/FormLogin";
 import FormRegister from "./register/components/FormRegister";
 
@@ -9,7 +11,6 @@ const Auth = () => {
   const query = router.query;
   return (
     <>
-      <Navbar />
       <div className="text-white max-w-[1340px] mx-auto">
         <div className="px-6">
           <div className="flex xl:justify-center lg:justify-between justify-center items-center flex-wrap h-full g-6">
@@ -31,8 +32,8 @@ const Auth = () => {
           </div>
         </div>
       </div>
-      <Footer />
     </>
   );
 };
+Auth.Layout = PublicLayout;
 export default Auth;
