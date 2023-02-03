@@ -1,6 +1,9 @@
 const Util = {
   convertSreachPrams(key){
-    return key.replace("+", " ");
+    if(typeof key !== 'undefined'){
+      console.log(key);
+      return key.replace("+", " ");
+      }
   },
   convertSreachkey(key, mode) {
     if (mode === "vi") {

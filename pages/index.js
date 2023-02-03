@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import PublicApi from "../apis/PublicApi";
 import Analytics from "../components/Analytics";
 import Footer from "../components/Footer";
@@ -14,12 +14,15 @@ import { PublicLayout } from "../layouts/public";
 import { PublicMainLayout } from "../layouts/publicmain";
 
 export default function Home() {
-  // useEffect(() =>{
-  //   (async ()=>{
-  //      const res =  await PublicApi.getCategories()
-  //      console.log(res);
-  //   })()
-  // },[])
+  const [products,setProducts] = useState([]);
+  useEffect(() =>{
+    PublicApi.getProducts('all','').then(res =>{
+        console.log(res.data);
+        setProducts(res.data)
+    }).catch(error =>{
+        Notify.failure(error);
+    });
+},[])
   return (
     <div>
       <Head>
@@ -31,11 +34,11 @@ export default function Home() {
       <main className=''>
       <Hero /> 
       <HotKeyWordList />
-      <TopSale />
+      <TopSale products = {products}/>
       <Analytics />
       <Newsletter />
-      <Study />
-      <Study />
+      <Study products = {products}/>
+      <Study products = {products}/>
       <GoToTheMoon />
       </main>
     </div>

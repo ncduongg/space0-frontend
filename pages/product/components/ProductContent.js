@@ -1,6 +1,6 @@
 import { Textarea } from "@nextui-org/react";
 
-const ProductContent = () => {
+const ProductContent = ({notes}) => {
   return (
     <>
       <div className="w-full pt-6 text-white">
@@ -10,16 +10,7 @@ const ProductContent = () => {
           </h2>
           <div>
             <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea
-              suscipit optio, soluta non quod eum minus perferendis veritatis,
-              veniam facere hic rem porro eaque! Ducimus molestias alias quis
-              perferendis a! Lorem ipsum dolor sit amet consectetur adipisicing
-              elit. Ea suscipit optio, soluta non quod eum minus perferendis
-              veritatis, veniam facere hic rem porro eaque! Ducimus molestias
-              alias quis perferendis a! Lorem ipsum dolor sit amet consectetur
-              adipisicing elit. Ea suscipit optio, soluta non quod eum minus
-              perferendis veritatis, veniam facere hic rem porro eaque! Ducimus
-              molestias alias quis perferendis a!
+              {notes}
             </p>
           </div>
           <div className="border-dashed border-t-2 border-[#00df9a] py-7 flex">

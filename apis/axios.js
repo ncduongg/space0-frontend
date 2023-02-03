@@ -2,7 +2,8 @@ import axios from "axios";
 const axiosClients = axios.create({
   baseURL: "http://localhost:8686",
   headers: {
-    "Content-Type": "application/json"
+    "Content-Type": "application/json",
+    "Access-Control-Allow-Origin": "*"
   }
 });
 // Add a request interceptor

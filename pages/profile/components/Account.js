@@ -1,6 +1,9 @@
 import Image from "next/image";
+import useAuth from "../../../hooks/useAuth";
 
 const Account = () => {
+  const {profile} = useAuth();
+  console.log(profile);
   return (
     <>
       <div className="w-full flex-[1_1_90%]  h-auto bg-white bg-gradient-to-r from-slate-800 to-[#00df9a] rounded-br-3xl">
@@ -9,25 +12,25 @@ const Account = () => {
           <div className="flex justify-start gap-10">
             <div className="pr-4">
               <p className="font-light text-[#00df9a]">Tên đăng nhập</p>
-              <p>ncduong</p>
+              <p>{profile?.data?.content.username}</p>
               <p className="font-light text-[#00df9a]">Số dư</p>
-              <p>0đ</p>
+              <p>{profile?.data?.content.amount} đ</p>
             </div>
             <div className="pr-4">
               <p className="font-light text-[#00df9a]">Email</p>
-              <p>ncduong.info@gmail.com</p>
+              <p>{profile?.data?.content.email}</p>
               <p className="font-light text-[#00df9a]">Tích lũy</p>
               <p>0đ</p>
             </div>
             <div className="pr-4">
               <p className="font-light text-[#00df9a]">Họ và Tên</p>
-              <p>Nguyễn Công Dương</p>
+              <p>{profile?.data?.content.name}</p>
               <p className="font-light text-[#00df9a]">Ngày tham gia</p>
               <p>2018-08-20 22:47:32</p>
             </div>
             <div className="pr-4">
-              <p className="font-light text-[#00df9a]">Nhóm khách hàng</p>
-              <p>Member</p>
+              <p className="font-light text-[#00df9a]">Số điện thoại</p>
+              <p>{profile?.data?.content.phone}</p>
             </div>
           </div>
         </div>

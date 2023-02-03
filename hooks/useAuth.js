@@ -18,8 +18,12 @@ const useAuth = (op) => {
   const firstLOading = profile === undefined && error === undefined
   async function login(body) {
     await AuthApi.login(body).then((res) => {
-      Notify.success(res.data.message)
-      router.push("/profile/"+body.username +"?menu=taikhoan")
+      if(res.data.response_code ==='000'){
+        Notify.success(res.data.message)
+        router.push("/profile/"+body.username +"?menu=taikhoan")
+      } else {
+        Notify.failure(res.data.message)
+      }
     }).catch(error =>{
         return error;
     });

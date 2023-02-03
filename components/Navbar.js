@@ -35,7 +35,7 @@ export default function Navbar() {
           backgroundColor: "rgba(0,0,0,0.8)",
         });
         setTimeout(() => {
-          router.push("/sreach/" + Util.convertSreachkey(sreach, "en"));
+          router.push("/sreach/all/prod/" + sreach);
           Notiflix.Loading.remove();
         }, 1500);
       } else {
@@ -46,7 +46,7 @@ export default function Navbar() {
         setTimeout(() => {
           Notiflix.Block.remove(".product-list");
         }, 1500);
-        router.push("/sreach/" + Util.convertSreachkey(sreach, "en"));
+        router.push(`/sreach/${router.query.category}/prod/${sreach}`);
       }
     }
   };
@@ -87,7 +87,7 @@ export default function Navbar() {
             <Link href="#">Home</Link>
           </li>
           <li className="p-4 my-auto">
-            <Link href="#">Shop</Link>
+            <Link href="/sreach/all/prod">Shop</Link>
           </li>
           <li className="p-4 my-auto">
             <Link href="#">Blog</Link>
@@ -115,7 +115,7 @@ export default function Navbar() {
             </>
           ) : (
             <>
-              <li className="p-4">
+              <li className="p-4 relative">
                 <Link href={`/profile/${profile.data.content.username}?menu=taikhoan`}>
                   <div className="" title="Profile">
                     <IconContext.Provider
@@ -129,7 +129,28 @@ export default function Navbar() {
                     </IconContext.Provider>
                   </div>
                 </Link>
-                
+                <div className="absolute hidden bg-gray-700 h-max w-52 bottom-0 left-0 translate-y-[100%] flex flex-col divide-y whitespace-nowrap">
+                  <div id="user-info" className="flex items-center space-x-4 p-4">
+                      <div id="user-avt" className="bg-slate-300 h-12 w-12 rounded-full"></div>
+                      <div className="flex flex-col space-y-2">
+                        <strong className="text-lg">{profile?.data?.content?.username}</strong>
+                        <p className="font-normal">Bê Đê</p>
+                      </div>
+                  </div>
+                  <div className="flex flex-col">
+                    <a href="#!" className="flex items-center space-x-6 p-4">Profile</a>
+                    <a href="#!" className="flex items-center space-x-6 p-4">Inbox</a>
+                    <a href="#!" className="flex items-center space-x-6 p-4">Chat</a>
+                  </div>
+                  <div className="flex flex-col">
+                    <a href="#!" className="flex items-center space-x-6 p-4">Settings</a>
+                    <a href="#!" className="flex items-center space-x-6 p-4">Pricing</a>
+                    <a href="#!" className="flex items-center space-x-6 p-4">FAQ</a>
+                  </div>
+                  <div>
+                  <button className="flex items-center space-x-6 p-4">Đăng xuất</button>
+                  </div>
+                </div>
               </li>
               <li className="p-4">
               <div className="" title="Logout">

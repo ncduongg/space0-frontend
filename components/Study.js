@@ -1,6 +1,6 @@
 import Cards from "./Cards";
 
-const Study = () => {
+const Study = ({products}) => {
   return (
     <div className="bg-white py-6 ">
       <div className="max-w-[1340px] mx-auto border-b border-spacing-7">
@@ -11,14 +11,13 @@ const Study = () => {
           </p>
         </div>
         <div className="flex flex-row justify-between flex-wrap">
-          <Cards colortext="text-black" />
-          <Cards colortext="text-black" />
-          <Cards colortext="text-black" />
-          <Cards colortext="text-black" />
-          <Cards colortext="text-black" />
-          <Cards colortext="text-black" />
-          <Cards colortext="text-black" />
-          <Cards colortext="text-black" />
+        {
+              products.map(i =>(
+                <>
+                <Cards colortext="text-black" product={i} key={i.prod_id}/>
+                </>
+              ))
+            }
         </div>
         <div className="text-center text-[#00df9a] mb-4">
             <p className="cursor-pointer">Xem Thêm</p>

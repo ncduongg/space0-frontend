@@ -1,7 +1,7 @@
 import Notiflix from "notiflix";
 import Cards from "../../../components/Cards";
 
-const ProductList = () => {
+const ProductList = ({products}) => {
   const handleXemThem = () =>{
     Notiflix.Block.standard(".product-list", "Loading...", {
       backgroundColor: "rgba(0,0,0,0.8)",
@@ -15,22 +15,13 @@ const ProductList = () => {
     <>
       <div className="w-full text-white product-list">
         <div className="max-w-[1340px] mx-auto flex-wrap flex justify-center gap-4 ">
-          <Cards />
-          <Cards />
-          <Cards />
-          <Cards />
-          <Cards />
-          <Cards />
-          <Cards />
-          <Cards />
-          <Cards />
-          <Cards />
-          <Cards />
-          <Cards />
-          <Cards />
-          <Cards />
-          <Cards />
-          <Cards />
+          {
+            products.map(i =>(
+              <>
+              <Cards product={i} key={i.prod_id}/>
+              </>
+            ))
+          }
         </div>
         <div className="text-center text-[#00df9a] mb-4">
           <p className="cursor-pointer" onClick={handleXemThem}>Xem Thêm</p>
