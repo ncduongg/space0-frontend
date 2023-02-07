@@ -1,8 +1,7 @@
-import Image from "next/image";
-import Link from "next/link";
-import React, { useEffect, useState } from "react";
-import Item from "../assets/imgItems/laptop.jpg";
 import classnames from "classnames";
+import Link from "next/link";
+import React, { useState } from "react";
+import { CartContext } from "../Util/CartProvider";
 import CountDown from "./CountDown";
 const Cards = ({ product,colortext }) => {
   console.log(product);
@@ -10,7 +9,6 @@ const Cards = ({ product,colortext }) => {
     new Date("Dec 5, 2022 15:37:25").getTime()
   );
   const url = "http://localhost:8686/api/file/images/";
-  console.log(url + product.prod_image);
   return (
     <>
       <Link href={`/product/${product.prod_id}`}>

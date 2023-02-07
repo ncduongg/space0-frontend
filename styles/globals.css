@@ -19,6 +19,22 @@ a {
   box-sizing: border-box;
 }
 
+body::-webkit-scrollbar {
+  width: 0.4em;
+  background-color: #F5F5F5;
+} 
+
+body::-webkit-scrollbar-thumb {
+  background-color: #00df9a;
+}
+
+body::-webkit-scrollbar-thumb:hover {
+  background-color: #00df8a;
+}
+
+body::-webkit-scrollbar-track {
+  background-color: #F5F5F5;
+}
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;

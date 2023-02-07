@@ -39,7 +39,7 @@ export default function Home() {
       <Newsletter />
       <Study products = {products}/>
       <Study products = {products}/>
-      <GoToTheMoon />
+     
       </main>
     </div>
   );

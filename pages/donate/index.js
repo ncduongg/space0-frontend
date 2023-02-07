@@ -76,7 +76,7 @@ const Donate = () => {
     PrivateApi.createDonate(body)
       .then((res) => {
         if (res.data.response_code === "000") {
-          fetch("https://dev.onepay.vn/client/qt/do/", {
+          fetch("https://mtf.onepay.vn/client/qt/do/", {
             method: "POST",
             headers: {
               "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",

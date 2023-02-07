@@ -26,7 +26,7 @@ const GoToTheMoon = () => {
   return (
     <>
       {isVisible && (
-        <div className="fixed right-5 bottom-5 cursor-pointer">
+        <div className="fixed right-5 bottom-5 cursor-pointer animate-pulse">
           <Image
             src="/back-to-top-icon.png"
             alt="/"

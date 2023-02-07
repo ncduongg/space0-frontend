@@ -1,16 +1,18 @@
+import Cookies from "js-cookie";
 import { useRouter } from "next/router";
-import Notiflix from "notiflix";
-import { useEffect, useState } from "react";
+import Notiflix, { Notify } from "notiflix";
+import { useContext, useEffect, useState } from "react";
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 import { IconContext } from "react-icons";
 import { AiOutlineCopy } from "react-icons/ai";
-import { BsFillInboxesFill } from "react-icons/bs";
+import { BsFillCartPlusFill, BsFillInboxesFill } from "react-icons/bs";
+import AlertCustom from "../../../components/AlertCustom";
 import CountDown from "../../../components/CountDown";
 import useAuth from "../../../hooks/useAuth";
+import { CartContext } from "../../../Util/CartProvider";
 
 const ProductDetail = ({ product }) => {
-  console.log(product);
   const [countDate, setCountDate] = useState(
     new Date("Dec 25, 2022 15:37:25").getTime()
   );
@@ -18,30 +20,7 @@ const ProductDetail = ({ product }) => {
   const [url, setUrl] = useState();
   const route = useRouter();
   const urlIMG = "http://localhost:8686/api/file/images/";
-  // const [dataTabs, setDataTabs] = useState(product);
-  // const [dataTabs, setDataTabs] = useState([
-  //   {
-  //     id: 1,
-  //     tabTitle: "1 Tháng",
-  //     tabTitleItem: "Tài khoản Grammarly Premium 1 Tháng",
-  //     tabClass: "py-2 px-4  border-2 border-[#00df9a] rounded-md m-3",
-  //     tabClicked: true,
-  //   },
-  //   {
-  //     id: 2,
-  //     tabTitle: "12 Tháng",
-  //     tabTitleItem: "Tài khoản Grammarly Premium 12 Tháng",
-  //     tabClass: "py-2 px-4  border-2 border-[#00df9a] rounded-md m-3",
-  //     tabClicked: false,
-  //   },
-  // ]);
-  // const [title, setTitle] = useState(
-  //   dataTabs.map((i) => {
-  //     if (i.tabClicked) {
-  //       return i.tabTitleItem;
-  //     }
-  //   })
-  // );
+  const [cart, setCart] = useContext(CartContext);
   const origin =
     typeof window !== "undefined" && window.location.origin
       ? window.location.origin
@@ -49,19 +28,6 @@ const ProductDetail = ({ product }) => {
   useEffect(() => {
     setUrl(`${origin}${route.asPath}`);
   }, [origin, route.asPath, url]);
-  const handleClickSelect = () => {
-    let newArray = dataTabs.map((i) => {
-      const newI = {
-        ...i,
-        tabClicked: !i.tabClicked,
-      };
-      if (newI.tabClicked) {
-        setTitle(newI.tabTitleItem);
-      }
-      return newI;
-    });
-    setDataTabs(newArray);
-  };
   const handleCopyUrl = () => {
     navigator.clipboard.writeText(url);
     Notiflix.Notify.success("Đã Copy Url vào bộ nhớ đệm", {
@@ -69,28 +35,39 @@ const ProductDetail = ({ product }) => {
       clickToClose: true,
     });
   };
-  const handlerMuaNgay = () => {
+  const handlerMuaNgay = (options) => {
     confirmAlert({
-      title: 'Thông báo mua sản phẩm ',
-      message: 'Bạn có chắc chắn muốn mua '+ product.prod_name + " với giá "+ product.prod_amount_dis + "?",
-      buttons: [
-        {
-          label: 'Có, tôi mua',
-          onClick: muasanpham
-        },
-        {
-          label: 'Hừm, phải suy nghĩ lại',
-          onClick: () => alert('Click No')
-        }
-      ],
+      customUI: ({ onClose }) => (
+        <AlertCustom
+          title="Thông báo mua sản phẩm"
+          message={`Bạn có chắc chắn muốn mua ${product.prod_name} với giá ${product.prod_amount_dis} ?`}
+          onConfirm={muasanpham}
+          onCancel={onClose}
+        />
+      )
     });
   }
-  const muasanpham = () => {
+  function muasanpham (o) {
+    let checkDuplicate = cart.some(i  => i.prod_id === product.prod_id)
+    if(checkDuplicate) {
+      Notify.warning(product.prod_name + " đã tồn tại trong giỏ hàng của bạn")
+      route.push('/cart')
+      return;
+    }
     if(!profile?.data || profile.data.response_code !== "000") {
       alert("Bạn chưa đăng nhập, hãy đăng nhập để mua tài khoản nhé!")
       route.push('/auth/login')
     }
   }
+  const addToCart = () => {
+    let checkDuplicate = cart.some(i  => i.prod_id === product.prod_id)
+    if(checkDuplicate) {
+      Notify.warning(product.prod_name + " đã tồn tại trong giỏ hàng của bạn")
+      return;
+    }
+    Notify.success("Thêm thành công " + product.prod_name + " vào giỏ hàng")
+    setCart([...cart, {prod_id : product.prod_id,prod_name:product.prod_name,prod_amount:product.prod_amount,prod_amount_dis:product.prod_amount_dis}]);
+  };
   return (
     <>
       <div className="text-white flex max-w-[1340px] mx-auto pb-8 gap-4 border-dashed border-b-2 border-[#00df9a]">
@@ -145,20 +122,6 @@ const ProductDetail = ({ product }) => {
             }
           })()}
           <div className="flex justify-items-start">
-            {/* {dataTabs.map((btn) => (
-              <button
-                key={btn.id}
-                id={btn.id}
-                onClick={handleClickSelect}
-                className={
-                  btn.tabClicked
-                    ? "bg-[#00df9a] " + btn.tabClass
-                    : " border-[#00df9a]" + btn.tabClass
-                }
-              >
-                {btn.tabTitle}
-              </button>
-            ))} */}
             <button
               onClick={handlerMuaNgay}
               id="muangay"
@@ -166,6 +129,18 @@ const ProductDetail = ({ product }) => {
             >
               Mua Ngay
             </button>
+            <IconContext.Provider
+              value={{
+                color: "white",
+                size: "45px",
+                className:
+                  "border-[#00df9a] py-2 my-3 mx-3 px-1 bg-[#00df9a] rounded-md cursor-pointer",
+              }}
+            >
+              <div>
+                <BsFillCartPlusFill title="Thêm vào giỏ hàng" onClick={addToCart} textRendering= "sđấ"/>
+              </div>
+            </IconContext.Provider>
           </div>
         </div>
         <div className="w-[550px] border-l-2 pl-3 border-[#00df9a]">
